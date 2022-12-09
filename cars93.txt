@@ -1,0 +1,95 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+cars = pd.read_csv("C:/Users/Admin/Downloads/archive (2)/Cars93.csv")
+cars
+
+Cars = pd.read_csv("C:/Users/Admin/Downloads/archive (2)/Cars93.csv")
+columns = ["Manufacturer","Model","Type","Price","MPG.city","Passengers"]
+cars[columns].head()
+
+Cars["Price"].plot(kind="box",figsize = (10,7))
+
+fig, (ax1, ax2) = plt.subplots(1, 2)
+fig.set_figwidth(10)
+fig.set_figheight(7)
+
+ax1.boxplot(Cars["Horsepower"])
+ax2.boxplot(Cars["MPG.city"])
+
+ax1.set_title('Horsepower')
+ax1.set_xlabel('Horsepower')
+ax2.set_title('City Mileage')
+ax2.set_xlabel("City Mileage'(in miles per US gallon)")
+
+fig.tight_layout()
+
+fig, ax = plt.subplots(2, 3)
+fig.set_figwidth(10)
+fig.set_figheight(7)
+fig.suptitle("Multiple Box Plots", fontsize=16)
+
+ax[0][0].boxplot(Cars["Price"][Cars["Type"]=="Compact"])
+ax[0][0].set_title('Compact')
+
+ax[0][1].boxplot(Cars["Price"][Cars["Type"]=="Large"])
+ax[0][1].set_title('Large')
+
+ax[0][2].boxplot(Cars["Price"][Cars["Type"]=="Midsize"])
+ax[0][2].set_title('Midsize')
+
+ax[1][0].boxplot(Cars["Price"][Cars["Type"]=="Small"])
+ax[1][0].set_title('Small')
+
+ax[1][1].boxplot(Cars["Price"][Cars["Type"]=="Sporty"])
+ax[1][1].set_title('Sporty')
+
+ax[1][2].boxplot(Cars["Price"][Cars["Type"]=="Van"])
+ax[1][2].set_title('Van')
+
+
+ax = Cars.plot(["Horsepower"],["MPG.city"],kind="scatter", color="black",marker = "*",figsize=(10,7))
+
+ax.set_xlabel("Horsepower")
+ax.set_ylabel("MPG.city")
+ax.set_title("Horsepower vs MPG.city",fontsize=16)
+
+
+fig = plt.figure()
+fig.set_figwidth(10)
+fig.set_figheight(7)
+
+car_type_list = Cars["Type"].unique()
+print(car_type_list)
+colors_list = ['red','blue','pink','green','black','yelow']
+for car_type,colr in zip(car_type_list,colors_list):
+    x = Cars[Cars["Type"] == car_type]["Horsepower"]
+    y = Cars[Cars["Type"] == car_type]["MPG.city"]
+    plt.scatter(x,y,color = colr,label=car_type)
+    
+plt.suptitle("Scatter plot of horsepower and mileage",fontsize=16)
+plt.xlabel("Horsepower")
+plt.ylabel("Mileage City")
+plt.legend()
+
+
+fig = plt.figure()
+fig.set_figwidth(10)
+fig.set_figheight(7)
+plt.bar(Cars["DriveTrain"], Cars["MPG.city"],width=0.2,label="Mileage in city")
+plt.suptitle("DriveTrain vs MPG.city",fontsize=16)
+plt.xlabel("DriveTrain")
+plt.ylabel("MPG.city")
+plt.legend()
+
+
+plt.barh(Cars["DriveTrain"],Cars["MPG.city"],height=0.2,label="Mileage in city")
+plt.suptitle("DriveTrain vs MPG.city",fontsize=16)
+plt.xlabel("DriveTrain")
+plt.ylabel("MPG.city")
+plt.legend()
+
+Cars["Passengers"].unique()
+
+
